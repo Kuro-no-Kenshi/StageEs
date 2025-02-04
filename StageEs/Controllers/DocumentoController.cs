@@ -18,22 +18,39 @@ namespace StageEs.Controllers
             _context = context;
         }
 
-        // GET: api/documenti
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TestataDocumento>>> GetAllDocumenti()
+        // GET: api/documenti/filter
+        [HttpGet("filter")]
+        public async Task<ActionResult<IEnumerable<TestataDocumento>>> FilteredGetAllDocumenti(
+            [FromQuery] DateTime? DataDocumento,[FromQuery] string? NumeroDocumento, [FromQuery] int? customerId)
         {
-            var documenti = await _context.TestataDocumenti
-                                           .Include(r => r.RigaDocumento)  // Include anche le righe
-                                           .ToListAsync();
+            var query = _context.TestataDocumenti
+                                .Include(r => r.RigaDocumento)
+                                .AsQueryable();
+
+            if (DataDocumento.HasValue)
+            {
+                query = query.Where(d => d.DataDocumento.Date >= DataDocumento.Value.Date);
+            }
+
+            if (!string.IsNullOrEmpty(NumeroDocumento))
+            {
+                query = query.Where(d => d.NumeroDocumento.Contains(NumeroDocumento));
+            }
+
+            if (customerId.HasValue)
+            {
+                query = query.Where(d => d.CustomerId == customerId.Value);
+            }
+
+            var documenti = await query.ToListAsync();
 
             if (!documenti.Any())
             {
-                return NotFound("Nessun documento trovato.");
+                return NotFound(new { message = "Nessun documento trovato con i criteri specificati." });
             }
 
             return Ok(documenti);
         }
-
 
         // GET: api/documenti/{id}
         [HttpGet("{id}")]
