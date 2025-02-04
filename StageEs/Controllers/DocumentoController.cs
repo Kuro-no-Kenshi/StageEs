@@ -18,6 +18,22 @@ namespace StageEs.Controllers
             _context = context;
         }
 
+        // GET: api/documenti
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TestataDocumento>>> GetAllDocumenti()
+        {
+            var documenti = await _context.TestataDocumenti
+                                           .Include(r => r.RigaDocumento)  // Include anche le righe
+                                           .ToListAsync();
+
+            if (!documenti.Any())
+            {
+                return NotFound("Nessun documento trovato.");
+            }
+
+            return Ok(documenti);
+        }
+
         // GET: api/documenti/filter
         [HttpGet("filter")]
         public async Task<ActionResult<IEnumerable<TestataDocumento>>> FilteredGetAllDocumenti(
