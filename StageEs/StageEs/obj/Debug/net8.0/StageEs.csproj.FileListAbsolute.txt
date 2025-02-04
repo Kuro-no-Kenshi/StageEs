@@ -1,0 +1,8 @@
+C:\Users\DanieleRanzani\source\repos\StageEs\StageEs\obj\Debug\net8.0\StageEs.csproj.AssemblyReference.cache
+C:\Users\DanieleRanzani\source\repos\StageEs\StageEs\obj\Debug\net8.0\StageEs.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DanieleRanzani\source\repos\StageEs\StageEs\obj\Debug\net8.0\StageEs.AssemblyInfoInputs.cache
+C:\Users\DanieleRanzani\source\repos\StageEs\StageEs\obj\Debug\net8.0\StageEs.AssemblyInfo.cs
+C:\Users\DanieleRanzani\source\repos\StageEs\StageEs\obj\Debug\net8.0\StageEs.csproj.CoreCompileInputs.cache
+C:\Users\DanieleRanzani\source\repos\StageEs\StageEs\obj\Debug\net8.0\StageEs.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\DanieleRanzani\source\repos\StageEs\StageEs\obj\Debug\net8.0\StageEs.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\DanieleRanzani\source\repos\StageEs\StageEs\obj\Debug\net8.0\StageEs.sourcelink.json
