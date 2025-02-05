@@ -34,6 +34,44 @@ namespace StageEs.Controllers
             return Ok(documenti);
         }
 
+        // GET: api/documenti/filter
+        [HttpGet("filter")]
+        public async Task<ActionResult<IEnumerable<TestataDocumento>>> FilteredGetAllDocumenti(
+            [FromQuery] DateTime? DataDocumento, [FromQuery] string? NumeroDocumento,
+            [FromQuery] string? RagioneSociale)
+        {
+            var query = _context.TestataDocumenti
+                                .Include(d => d.RigaDocumento)
+                                .Include(d => d.Customer)
+                                .AsQueryable();
+
+            if (DataDocumento.HasValue)
+            {
+                query = query.Where(d => d.DataDocumento.Date >= DataDocumento.Value.Date);
+            }
+
+            if (!string.IsNullOrEmpty(NumeroDocumento))
+            {
+                query = query.Where(d => d.NumeroDocumento.Contains(NumeroDocumento));
+            }
+
+            if (!string.IsNullOrEmpty(RagioneSociale))
+            {
+                query = query.Where(d => d.Customer.RagioneSociale.Contains(RagioneSociale));
+            }
+
+            var documenti = await query.ToListAsync();
+
+            if (!documenti.Any())
+            {
+                return NotFound(new { message = "Nessun documento trovato con i criteri specificati." });
+            }
+
+            return Ok(documenti);
+        }
+
+
+
 
         // GET: api/documenti/{id}
         [HttpGet("{id}")]

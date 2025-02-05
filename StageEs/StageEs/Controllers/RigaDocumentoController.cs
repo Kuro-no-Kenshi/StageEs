@@ -35,9 +35,8 @@ namespace StageEs.Controllers
         [HttpPost("{documentId}")]
         public async Task<ActionResult<RigaDocumento>> CreateRigaDocumento(int documentId, [FromBody] RigaDocumento riga)
         {
-            // Trova il documento a cui associare la riga
             var documento = await _context.TestataDocumenti
-                .Include(d => d.RigaDocumento)  // Includiamo le righe del documento
+                .Include(d => d.RigaDocumento)
                 .FirstOrDefaultAsync(d => d.DocumentId == documentId);
 
             if (documento == null)
@@ -58,8 +57,6 @@ namespace StageEs.Controllers
         public async Task<IActionResult> UpdateRigaDocumento(int rigaId, [FromBody] RigaDocumento updatedRiga)
         {
 
-            //necessario idDocumento per collegare la riga al documento, non necessario idRiga perchè lo prende dall'url
-
             var riga = await _context.RigaDocumenti.FindAsync(rigaId);
             if (riga == null)
             {
@@ -78,8 +75,6 @@ namespace StageEs.Controllers
         [HttpDelete("{rigaId}")]
         public async Task<IActionResult> DeleteRigaDocumento(int rigaId)
         {
-
-            //necessario solo idRiga
 
             var riga = await _context.RigaDocumenti.FindAsync(rigaId);
             if (riga == null)

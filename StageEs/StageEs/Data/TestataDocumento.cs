@@ -16,6 +16,7 @@ namespace StageEs.Data
         [Required(ErrorMessage = "Il cliente è obbligatorio")]
         [ForeignKey("CustomerId")]
         public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
         public List<RigaDocumento>? RigaDocumento { get; set; }
     }
 }
