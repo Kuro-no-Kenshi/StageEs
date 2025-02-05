@@ -36,13 +36,5 @@ namespace StageEs.Data
         [Required(ErrorMessage = "La via è obbligatoria.")]
         [RegularExpression(@"^[A-Za-z0-9\s\.\-]+(\s\d+[A-Za-z]?\-?\d*\/?[A-Za-z]?)?$", ErrorMessage = "La via deve contenere solo lettere, numeri, trattini e numeri civici.")]
         public string Via { get; set; }
-
-        public string IndirizzoCompleto
-        {
-            get
-            {
-                return $"{Via}, {Citta} {Cap} ({Provincia})";
-            }
-        }
     }
 }

@@ -26,7 +26,10 @@ namespace StageEs.Controllers
                                               c.RagioneSociale,
                                               c.PIVA,
                                               c.CodFisc,
-                                              c.IndirizzoCompleto
+                                              c.Cap,
+                                              c.Citta,
+                                              c.Provincia,
+                                              c.Via
                                           })
                                           .ToListAsync();
             return Ok(customers);
@@ -44,7 +47,10 @@ namespace StageEs.Controllers
                                              c.RagioneSociale,
                                              c.PIVA,
                                              c.CodFisc,
-                                             c.IndirizzoCompleto
+                                             c.Cap,
+                                             c.Citta,
+                                             c.Provincia,
+                                             c.Via
                                          })
                                          .FirstOrDefaultAsync();
 
