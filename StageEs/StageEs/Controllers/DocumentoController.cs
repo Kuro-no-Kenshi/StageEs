@@ -88,18 +88,33 @@ namespace StageEs.Controllers
 
         // POST: api/documenti
         [HttpPost]
-        public async Task<ActionResult<TestataDocumento>> CreateDocumento([FromBody] TestataDocumento documento)
+        public async Task<ActionResult<TestataDocumento>> CreateDocumento([FromBody] CreateDocumentoDTO dto)
         {
-            if (documento.CustomerId == 0)
+            var customerExists = await _context.Customers.AnyAsync(c => c.CustomerId == dto.CustomerId);
+            if (!customerExists)
             {
-                return BadRequest(new { message = "Il cliente è obbligatorio" });
+                return BadRequest(new { message = "Il cliente specificato non esiste" });
             }
+
+            var documento = new TestataDocumento
+            {
+                DataDocumento = dto.DataDocumento,
+                NumeroDocumento = dto.NumeroDocumento,
+                CustomerId = dto.CustomerId,
+                RigaDocumento = dto.Righe?.Select(r => new RigaDocumento
+                {
+                    Descrizione = r.Descrizione,
+                    Quantita = r.Quantita
+                }).ToList()
+            };
 
             _context.TestataDocumenti.Add(documento);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetDocumento), new { id = documento.DocumentId }, documento);
         }
+
+
 
         // PUT: api/documenti/{id}
         [HttpPut("{id}")]
