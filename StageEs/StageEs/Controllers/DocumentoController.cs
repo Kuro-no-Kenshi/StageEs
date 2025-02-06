@@ -37,8 +37,7 @@ namespace StageEs.Controllers
         // GET: api/documenti/filter
         [HttpGet("filter")]
         public async Task<ActionResult<IEnumerable<TestataDocumento>>> FilteredGetAllDocumenti(
-            [FromQuery] DateTime? DataDocumento, [FromQuery] string? NumeroDocumento,
-            [FromQuery] string? RagioneSociale)
+            [FromQuery] DateTime? DataDocumento, [FromQuery] string? NumeroDocumento, [FromQuery] string? RagioneSociale)
         {
             var query = _context.TestataDocumenti
                                 .Include(d => d.RigaDocumento)
@@ -69,9 +68,6 @@ namespace StageEs.Controllers
 
             return Ok(documenti);
         }
-
-
-
 
         // GET: api/documenti/{id}
         [HttpGet("{id}")]
