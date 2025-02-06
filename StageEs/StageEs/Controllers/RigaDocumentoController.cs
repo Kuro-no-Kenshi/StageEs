@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StageEs.Data;
+using StageEs.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -70,6 +71,56 @@ namespace StageEs.Controllers
 
             return Ok("Riga aggiornata con successo");
         }
+
+        // PATCH: api/righe-documento/{rigaId}
+
+        [HttpPatch("{rigaId}")]
+
+        public async Task<IActionResult> UpdateCampoRiga(int rigaId, [FromBody] UpdateCampoRequest request)
+
+        {
+
+            var riga = await _context.RigaDocumenti.FindAsync(rigaId);
+
+            if (riga == null)
+
+            {
+
+                return NotFound(new { message = "Riga documento non trovata" });
+
+            }
+
+            switch (request.Campo.ToLower())
+            {
+                case "descrizione":
+
+                    if (request.Valore is string descrizione)
+                        riga.Descrizione = descrizione;
+                    else
+                        return BadRequest(new { message = "Il campo descrizione deve essere una stringa" });
+
+                    break;
+
+                case "quantita":
+
+                    if (request.Valore is int quantita)
+                        riga.Quantita = quantita;                    
+                    else
+                        return BadRequest(new { message = "Il campo quantità deve essere un numero" });
+
+                    break;
+                default:
+                    return BadRequest(new { message = "Campo non valido" });
+
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Riga aggiornata con successo");
+
+        }
+
+
 
         // DELETE: api/righe-documento/{rigaId}
         [HttpDelete("{rigaId}")]

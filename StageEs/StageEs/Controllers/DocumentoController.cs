@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StageEs.Data;
+using StageEs.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -114,6 +115,55 @@ namespace StageEs.Controllers
             documento.NumeroDocumento = updatedDocumento.NumeroDocumento;
             documento.DataDocumento = updatedDocumento.DataDocumento;
             documento.CustomerId = updatedDocumento.CustomerId;
+
+            await _context.SaveChangesAsync();
+            return Ok("Documento aggiornato con successo");
+        }
+
+        // PATCH: api/documenti/{id}
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateDocumentoCampo(int id, [FromBody] UpdateCampoRequest request)
+        {
+            var documento = await _context.TestataDocumenti.FindAsync(id);
+            if (documento == null)
+            {
+                return NotFound(new { message = "Documento non trovato" });
+            }
+
+            switch (request.Campo.ToLower())
+            {
+                case "data":
+                    if (request.Valore is string dataString)
+                    {
+                        if (DateTime.TryParse(dataString, out DateTime data))
+                            documento.DataDocumento = data;
+                        else
+                            return BadRequest(new { message = "Formato della data non valido" });
+                    }
+                    else
+                        return BadRequest(new { message = "Il campo data deve essere una stringa" });
+
+                    break;
+
+                case "numero":
+                    if (request.Valore is string numeroString)
+                        documento.NumeroDocumento = numeroString;
+                    else
+                        return BadRequest(new { message = "Il campo numero deve essere una stringa" });
+
+                    break;
+
+                case "cliente":
+                    if (request.Valore is int customerId)
+                        documento.CustomerId = customerId;
+                    else
+                        return BadRequest(new { message = "Il campo cliente deve essere un ID numerico" });
+
+                    break;
+
+                default:
+                    return BadRequest(new { message = "Campo non valido" });
+            }
 
             await _context.SaveChangesAsync();
             return Ok("Documento aggiornato con successo");
