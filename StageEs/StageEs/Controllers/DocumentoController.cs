@@ -173,16 +173,26 @@ namespace StageEs.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDocumento(int id)
         {
-            var documento = await _context.TestataDocumenti.FindAsync(id);
+            var documento = await _context.TestataDocumenti
+                                          .Include(d => d.RigaDocumento)
+                                          .FirstOrDefaultAsync(d => d.DocumentId == id);
+
             if (documento == null)
             {
                 return NotFound(new { message = "Documento non trovato" });
             }
 
+            if (documento.RigaDocumento != null && documento.RigaDocumento.Any())
+            {
+                _context.RigaDocumenti.RemoveRange(documento.RigaDocumento);
+            }
+
             _context.TestataDocumenti.Remove(documento);
+
             await _context.SaveChangesAsync();
 
-            return Ok("Documento eliminato con successo");
+            return Ok(new { message = "Documento e relative righe eliminati con successo" });
         }
+
     }
 }

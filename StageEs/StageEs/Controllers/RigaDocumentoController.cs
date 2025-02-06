@@ -73,22 +73,13 @@ namespace StageEs.Controllers
         }
 
         // PATCH: api/righe-documento/{rigaId}
-
         [HttpPatch("{rigaId}")]
-
         public async Task<IActionResult> UpdateCampoRiga(int rigaId, [FromBody] UpdateCampoRequest request)
-
         {
-
             var riga = await _context.RigaDocumenti.FindAsync(rigaId);
 
             if (riga == null)
-
-            {
-
                 return NotFound(new { message = "Riga documento non trovata" });
-
-            }
 
             switch (request.Campo.ToLower())
             {
@@ -109,6 +100,7 @@ namespace StageEs.Controllers
                         return BadRequest(new { message = "Il campo quantità deve essere un numero" });
 
                     break;
+
                 default:
                     return BadRequest(new { message = "Campo non valido" });
 
