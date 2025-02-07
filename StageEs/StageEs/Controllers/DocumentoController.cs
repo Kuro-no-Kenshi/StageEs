@@ -114,11 +114,9 @@ namespace StageEs.Controllers
             return CreatedAtAction(nameof(GetDocumento), new { id = documento.DocumentId }, documento);
         }
 
-
-
         // PUT: api/documenti/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDocumento(int id, [FromBody] TestataDocumento updatedDocumento)
+        public async Task<IActionResult> UpdateDocumento(int id, [FromBody] DocumentoUpdateModel updatedDocumento)
         {
             var documento = await _context.TestataDocumenti.FindAsync(id);
 
@@ -134,6 +132,7 @@ namespace StageEs.Controllers
             await _context.SaveChangesAsync();
             return Ok("Documento aggiornato con successo");
         }
+
 
         // PATCH: api/documenti/{id}
         [HttpPatch("{id}")]
