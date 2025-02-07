@@ -57,6 +57,8 @@ namespace StageEs.Controllers
         [HttpPut("{rigaId}")]
         public async Task<IActionResult> UpdateRigaDocumento(int rigaId, [FromBody] RigaDocumento updatedRiga)
         {
+            Console.WriteLine($"Riga ID: {rigaId}");
+            Console.WriteLine($"Descrizione: {updatedRiga.Descrizione}, Quantità: {updatedRiga.Quantita}");
 
             var riga = await _context.RigaDocumenti.FindAsync(rigaId);
             if (riga == null)
@@ -71,6 +73,7 @@ namespace StageEs.Controllers
 
             return Ok("Riga aggiornata con successo");
         }
+
 
         // PATCH: api/righe-documento/{rigaId}
         [HttpPatch("{rigaId}")]
@@ -118,7 +121,6 @@ namespace StageEs.Controllers
         [HttpDelete("{rigaId}")]
         public async Task<IActionResult> DeleteRigaDocumento(int rigaId)
         {
-
             var riga = await _context.RigaDocumenti.FindAsync(rigaId);
             if (riga == null)
             {
@@ -128,7 +130,8 @@ namespace StageEs.Controllers
             _context.RigaDocumenti.Remove(riga);
             await _context.SaveChangesAsync();
 
-            return Ok("Riga eliminata con successo");
+            return Ok(new { message = "Riga eliminata con successo" });
         }
+
     }
 }

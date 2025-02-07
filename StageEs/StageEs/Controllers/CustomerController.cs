@@ -112,7 +112,7 @@ namespace StageEs.Controllers
             _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();
 
-            return Ok("Cliente eliminato con successo");
+            return Ok(new { message = "Cliente eliminato con successo" });
         }
     }
 }
