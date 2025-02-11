@@ -24,7 +24,7 @@ namespace StageEs.Controllers
         public async Task<ActionResult<IEnumerable<TestataDocumento>>> GetAllDocumenti()
         {
             var documenti = await _context.TestataDocumenti
-                                           .Include(r => r.RigaDocumento)  // Include anche le righe
+                                           .Include(r => r.RigaDocumento)
                                            .ToListAsync();
 
             if (!documenti.Any())
@@ -38,7 +38,7 @@ namespace StageEs.Controllers
         // GET: api/documenti/filter
         [HttpGet("filter")]
         public async Task<ActionResult<IEnumerable<TestataDocumento>>> FilteredGetAllDocumenti(
-            [FromQuery] DateTime? DataDocumento, [FromQuery] string? NumeroDocumento, [FromQuery] string? RagioneSociale)
+            [FromQuery] DateOnly? DataDocumento, [FromQuery] string? NumeroDocumento, [FromQuery] string? RagioneSociale)
         {
             var query = _context.TestataDocumenti
                                 .Include(d => d.RigaDocumento)
@@ -47,7 +47,7 @@ namespace StageEs.Controllers
 
             if (DataDocumento.HasValue)
             {
-                query = query.Where(d => d.DataDocumento.Date >= DataDocumento.Value.Date);
+                query = query.Where(d => d.DataDocumento >= DataDocumento);
             }
 
             if (!string.IsNullOrEmpty(NumeroDocumento))
@@ -149,7 +149,7 @@ namespace StageEs.Controllers
                 case "data":
                     if (request.Valore is string dataString)
                     {
-                        if (DateTime.TryParse(dataString, out DateTime data))
+                        if (DateOnly.TryParse(dataString, out DateOnly data))
                             documento.DataDocumento = data;
                         else
                             return BadRequest(new { message = "Formato della data non valido" });

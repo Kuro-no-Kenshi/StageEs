@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StageEs")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1c03f1fecb419f22443e6268bd6326286e4f29a0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8be4b0dc4e0f4f3479ed7063196e02d2f58a58d0")]
 [assembly: System.Reflection.AssemblyProductAttribute("StageEs")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StageEs")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -2,7 +2,7 @@
 {
     public class CreateDocumentoDTO
     {
-        public DateTime DataDocumento { get; set; }
+        public DateOnly DataDocumento { get; set; }
         public string NumeroDocumento { get; set; }
         public int CustomerId { get; set; } // Solo l'ID del cliente
         public List<CreateRigaDocumentoDTO>? Righe { get; set; } // Lista di righe

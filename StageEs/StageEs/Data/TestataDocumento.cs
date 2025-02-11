@@ -9,7 +9,7 @@ namespace StageEs.Data
         [Key]
         public int DocumentId { get; set; }
         [Required(ErrorMessage = "La data del documento è obbligatoria")]
-        public DateTime DataDocumento { get; set; }
+        public DateOnly DataDocumento { get; set; }
         [Required(ErrorMessage = "Il numero del documento è obbligatorio")]
         [RegularExpression(@"^[A-Za-z0-9]{10}$", ErrorMessage = "Il numero del documento deve essere di 10 caratteri alfanumerici")]
         public string NumeroDocumento { get; set; }
